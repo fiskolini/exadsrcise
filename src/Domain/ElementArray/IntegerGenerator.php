@@ -10,7 +10,9 @@
 namespace Exadsrcise\Domain\ElementArray;
 
 use Exadsrcise\Domain\Common\Arr;
+use function array_push;
 use function array_rand;
+use function array_diff;
 use function range;
 
 class IntegerGenerator
