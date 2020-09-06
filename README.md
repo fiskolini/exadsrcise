@@ -41,7 +41,7 @@ After check it, you can run:
 ```
 
 
-I also used `symfony/console` package in order to build Console Application (in order to execute code easily).
+I also used `symfony/console` package to build Console Application.
 
 Console commands are under `Exadsrcise\Application\Commands` namespace and only handles the structure of the console command (string description/help, arguments/options) and the logic execution.
 
@@ -114,7 +114,7 @@ $numberRangeChecker = new NumberRangeChecker(1, 500);
 foreach ($numberRangeChecker->fetch() as $number)
             echo $number->output();
 ```
-`NumberRangeChecker` has a method `fetch` that returns a [Generator](https://www.php.net/manual/en/class.generator.php) - this way, we improve the memory used bu the application, since **we do not need to create the array** (keeping it in memory) only to write the desired output.
+`NumberRangeChecker` has a method `fetch` that returns a [Generator](https://www.php.net/manual/en/class.generator.php) - this way, we improve the memory used by the application, since **we do not need to create the array** (keeping it in memory) only to write the desired output.
 
 
 #2. 500 Element Array
@@ -127,16 +127,21 @@ Assuming we have an unordered array with random repeated numbers, we can solve t
 1. Append removed item to a local array - fastest way, do not need to iterate the array;
 2. Generate an ordered array and check natively with `array_diff function.
  
- I crated the solution under `Exadsrcise\Domain\ElementArray\IntegerGenerator` class. Some code is not being used in order to work (using solution **1**).
+ I crated the solution under `Exadsrcise\Domain\ElementArray\IntegerGenerator` class.
+ `findMissingNumbersNatively` method is not being used - just be kept for showing solution no. 2.
 
 #3. Database Connectivity
 =========================
-The solution of this exercise is under `Infrastructure/DB` class - this is a simple class to abstract both connection and Query (`SELECT` and `INSERT`). It's been used internally in `Exadsrcise\Persistency\Repositories\TestRepository` class (Repository pattern).
+> Demonstrate with PHP how you would connect to a MySQL (InnoDB) database and query for all records with the following fields: (name, age, job_title) from a table called 'exads_test'.
+> Also provide an example of how you would write a sanitised record to the same table.
+
+The solution of this exercise is under `Infrastructure/DB` class - this is a simple class to abstract both connection and Query (`SELECT` and `INSERT`).
+It's been used internally in `Exadsrcise\Persistency\Repositories\TestRepository` class (Repository pattern).
 > #### NOTE
 > DB class is using .env configuration file to get database connection configuration. Please configure it before use this command, otherwise it will fail.
 
 **Take into consideration:**
-- Fluent API - it enables chaining method
+- #### Elegant API - it enables chaining method
 ```php
 use Exadsrcise\Infrastructure\DB;
 
@@ -148,7 +153,7 @@ DB::instance()->selectFrom("exads_test")->all(function($row){
 // Save rows in memory
 $rows = DB::instance()->selectFrom("exads_test")->all();
 ```
-- Enables multiple row insert
+- #### Enables multiple row insert
 ```php
 use Exadsrcise\Infrastructure\DB;
 
@@ -158,13 +163,17 @@ DB::instance()->insertRow('exads_test', ['name', 'age', 'job_title'], ['Francisc
 // Insert multiple rows in a single statement
 $rows = [
     ['Francisco', 28, 'Software Developer'],
-    ['Elon Must', 49, 'Entrepreneur']
+    ['Elon Musk', 49, 'Entrepreneur']
 ];
 DB::instance()->insertRow('exads_test', ['name', 'age', 'job_title'], $rows);
 ```
 
 #4. Lottery
 ===========
+> The Irish National Lottery draw takes place twice weekly on a Wednesday and a Saturday at 8pm.
+> 
+> Write a function or class that calculates and returns the next valid draw date based on the current date and time **AND** also on an optionally supplied date and time.
+
 I've created a class `Exadsrcise\Domain\Datetime\DatetimeConverter` that abstracts the calculation of next date based on given week day.
 ```php
 use Exadsrcise\Domain\Datetime\DatetimeConverter;
@@ -179,6 +188,17 @@ echo "The weekend is not so far, is on the next day '{$tuesday->format('Y-m-d')}
 
 #5. A/B Testing
 ===============
+> Exads would like to A/B test a number of promotional designs to see which provides the best conversion rate.
+> Write a snippet of PHP code that redirects end users to the different designs based on the database table below. Extend the database model as needed.
+>
+> **i.e.** - 50% of people will be shown Design A, 25% shown Design B and 25% shown Design C. The code needs to be scalable as a single promotion may have upwards of 3 designs to test.
+
+  | **design_id** 	| **design_name** 	| **split_percent** 	|
+  |:-------------:	|:---------------:	|:-----------------:	|
+  | 1             	| Design 1        	| 50                	|
+  | 2             	| Design 2        	| 25                	|
+  | 3             	| Design 3        	| 25                	|
+
 The class `Exadsrcise\Domain\Promotion\PromotionSelector` was created to abstract the promotion selection based on its percentage.
 ```php
 use Exadsrcise\Domain\Promotion\PromotionSelector;
