@@ -1,3 +1,5 @@
+![Console example](/assets/console.png?raw=true "Console example")
+
 # Exadsrcise
 > Candidate Exercise - PHP Developer, for **_Exads_**
 > 
