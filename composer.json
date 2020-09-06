@@ -1,0 +1,28 @@
+{
+    "name": "franciscocarvaho/exadsexercise",
+    "description": "Candidate Exercise - PHP Developer",
+    "homepage": "http://francisco-carvalho.eu/",
+    "type": "project",
+    "authors": [
+        {
+            "name": "Francisco Carvalho",
+            "email": "fiskolini@gmail.com"
+        }
+    ],
+    "config": {
+        "sort-packages": true,
+        "optimize-autoloader": true,
+        "preferred-install": "dist"
+    },
+    "autoload": {
+        "psr-4": {
+            "Exadsrcise\\": "src/"
+        }
+    },
+    "require": {
+        "php": "^7.4",
+        "ext-mysqli": "*",
+        "symfony/console": "^5.1",
+        "vlucas/phpdotenv": "^5.1"
+    }
+}

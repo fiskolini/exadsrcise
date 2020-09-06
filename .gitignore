@@ -1,0 +1,18 @@
+# IDE stuff
+/.idea
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Composer
+/vendor
+composer.phar
+composer.lock
+
+# Tests
+/phpunit.xml
+.phpunit.result.cache
+
+# Others
+.env

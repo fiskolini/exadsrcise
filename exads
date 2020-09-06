@@ -1,0 +1,58 @@
+#!/usr/bin/env php
+<?php
+
+/*
+|--------------------------------------------------------------------------
+| Register the Loader
+|--------------------------------------------------------------------------
+|
+| The first stage of this application is to autoload all classmap
+| in order to get access to all classes (registered).
+| Composer provides a convenient class loader for our application.
+|
+*/
+require __DIR__.'/vendor/autoload.php';
+
+/*
+|--------------------------------------------------------------------------
+| Load application's kernel
+|--------------------------------------------------------------------------
+|
+| Load up this application so that we can run it and send
+| the responses back to the console and delight our users.
+|
+*/
+use Exadsrcise\Application\Commands\Factories\CommandFactory;
+use Exadsrcise\Application\ExadsApp;
+
+$application = new ExadsApp(__DIR__);
+
+/*
+|--------------------------------------------------------------------------
+| Load commands list
+|--------------------------------------------------------------------------
+|
+| Application must have many commands in order to work
+| properly. We have a list with commands in order to
+| be injected to this application
+|
+*/
+$commands = require_once __DIR__ . "/src/Application/Bootstrap/commands.php";
+
+// Iterate trough commands list and
+// inject into the application.
+foreach ($commands as $command){
+    try {
+        $application->addCommand(CommandFactory::factory($command));
+    } catch (Exception $exception){
+        exit($exception->getMessage());
+    }
+}
+
+// Run, phorrest, run!
+try {
+    $application->run();
+} catch (Exception $exception){
+    exit("Error running application. {$exception->getMessage()}");
+}
+
