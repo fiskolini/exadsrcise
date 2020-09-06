@@ -201,15 +201,15 @@ Improvements
 ============
 This application contains all solved exercises. However, there are some missing features that were ignored in order to focus on the solution.
 
-####1. DI Container:
+#### 1. DI Container:
 Use a different approach to register dependencies (such as **Database** or even the **Commands**) on the boot of the application. This way, we can divide responsability of those features' lifecycle, allow dependency injection trough constructor (SOLID best practices), etc.
 Some cool packages that already helps this approach:
 - [php-di/php-di](https://packagist.org/packages/php-di/php-di)
 - [pimple/pimple](https://packagist.org/packages/pimple/pimple)
 - [league/container](https://packagist.org/packages/league/container)
 
-####2. Code Coverage:
+#### 2. Code Coverage:
 This solution doesn't have any code coverage. There was my intention to provide that (at least Unit test coverage), but once again it was not requested as part of the exercise, so this Application only provides the solution of it.
 
-####3. Presentation layer abstraction:
+#### 3. Presentation layer abstraction:
 All the output of the commands are done in the command itself.
